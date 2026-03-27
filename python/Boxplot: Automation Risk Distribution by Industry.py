@@ -1,0 +1,5 @@
+plt.figure(figsize=(14, 6))
+sns.boxplot(data=df, x="industry", y="automation_risk_percent")
+plt.xticks(rotation=45)
+plt.title("Automation Risk Distribution by Industry")
+plt.show()
