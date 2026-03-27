@@ -1,16 +1,19 @@
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 
-features = df[[
-    "automation_risk_percent",
-    "salary_change_percent",
-    "ai_replacement_score"
-]]
+pca = PCA(n_components=2)
+components = pca.fit_transform(X)
 
-scaler = StandardScaler()
-X = scaler.fit_transform(features)
+df["pc1"] = components[:, 0]
+df["pc2"] = components[:, 1]
 
-kmeans = KMeans(n_clusters=4, random_state=42)
-df["cluster"] = kmeans.fit_predict(X)
-
-df[["job_role", "industry", "cluster"]].head()
+plt.figure(figsize=(10, 7))
+sns.scatterplot(
+    data=df,
+    x="pc1",
+    y="pc2",
+    hue="cluster",
+    palette="tab10",
+    alpha=0.8
+)
+plt.title("Clusters of Professions (PCA)")
+plt.show()
